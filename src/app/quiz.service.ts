@@ -9,7 +9,6 @@ export class QuizService {
 
   loadQuizzes = () => {
 
-
     const quizzesFromWeb: any[] = [
       {
         name: 'Quiz 1'
@@ -25,6 +24,23 @@ export class QuizService {
       , {
         name: 'Quiz 2'
         , questions: []
+      }
+      , {
+        name: 'Untitled Quiz'
+        , questions: [
+          {
+            name: 'Question 1'
+          }
+          , {
+            name: 'Question 2'
+          }
+          ,{
+            name: 'Question 3'
+          }
+          , {
+            name: 'Question 4'
+          }
+        ]
       }
 
     ];
