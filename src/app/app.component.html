@@ -18,14 +18,14 @@
           >
             {{ q.quizName }}
             <small class="font-itallic font-weight-lighter">
-              {{ q.quizQuestions.length}} questions
+              {{ q.quizQuestions.length}} question<span *ngIf="q.quizQuestions.length !== 1">s</span>
             </small>
           </button>
         </div>
       </div>
     </div>
     <div 
-      class="col-md-8"
+      class="col-md-8"p
       *ngIf="selectedQuiz != undefined"
     >
       <div class="mt-3 mb-3">
