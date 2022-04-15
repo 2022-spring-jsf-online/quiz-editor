@@ -15,7 +15,7 @@ interface QuestionDisplay {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'quiz-editor';
 
   constructor(
@@ -38,9 +38,22 @@ export class AppComponent implements OnInit{
 
   quizzes: QuizDisplay[] = [];
 
-  selectedQuiz: QuizDisplay | undefined= undefined;
+  selectedQuiz: QuizDisplay | undefined = undefined;
   selectQuiz = (q: QuizDisplay) => {
     this.selectedQuiz = q;
     console.log(this.selectedQuiz);
+  };
+  addNewQuiz = () => {
+    const newQuiz = {
+      quizName: "Untitled Quiz"
+      , quizQuestions: []
+    };
+
+    this.quizzes = [
+      ...this.quizzes
+      , newQuiz
+    ];
+
+    this.selectedQuiz = newQuiz;
   };
 }
