@@ -25,9 +25,9 @@ export class AppComponent implements OnInit {
   }
 
   errorLoadingQuizzes = false;
+  loadingQuizzesPage = true;
 
   loadQuizzesFromCloud = async () => {
-
     try {
       const quizzes = await this.quizSvc.loadQuizzes() ?? [];
       console.log(quizzes);
@@ -39,15 +39,18 @@ export class AppComponent implements OnInit {
         }))
         , markedForDelete: false
       }));
+
+      this.loadingQuizzesPage = false;
+
     } catch (err) {
       console.error(err);
       this.errorLoadingQuizzes = true;
+      this.loadingQuizzesPage = false;
     }
-
   };
 
-  ngOnInit() {
-    this.loadQuizzesFromCloud();
+  ngOnInit() {    
+    this.loadQuizzesFromCloud();    
   }
 
   quizzes: QuizDisplay[] = [];
