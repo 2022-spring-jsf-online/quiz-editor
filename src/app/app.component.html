@@ -68,6 +68,12 @@
           >
             +{{addedQuizCount}}
           </span>
+          <span
+            *ngIf="editedQuizCount > 0"
+            class="badge bg-light text-dark ms-1"
+          >
+            *{{editedQuizCount}}
+          </span>
         </button>
         <button
           (click)="cancelAllChanges()"
