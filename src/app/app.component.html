@@ -62,6 +62,12 @@
           >
             -{{deletedQuizCount}}
           </span>
+          <span
+            *ngIf="addedQuizCount > 0"
+            class="badge bg-success ms-1"
+          >
+            +{{addedQuizCount}}
+          </span>
         </button>
         <button
           (click)="cancelAllChanges()"
