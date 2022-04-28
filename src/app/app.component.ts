@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { QuizService } from './quiz.service';
+import { QuizService, QuizFromWeb } from './quiz.service';
 
-interface QuizDisplay {
+ interface QuizDisplay {
   quizName: string;
   quizQuestions: QuestionDisplay[];
   markedForDelete: boolean;
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     console.log(quizzes);
 
     quizzes.subscribe(
-      data => {
+      (data: QuizFromWeb[]) => {
         console.log(data);
         this.quizzes = data.map(x => ({
           quizName: x.name
