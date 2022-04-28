@@ -43,7 +43,11 @@
         </button>
         <span class="badge bg-success ms-1" *ngIf="addedQuizCount > 0">
           +{{addedQuizCount}}
-        </span> <button class="btn btn-link" class="btn btn link" (click)="cancelAllChanges()">
+        </span> 
+        <span class="badge bg-secondary ms-1" *ngIf="editedQuizCount > 0">
+          *{{editedQuizCount}}
+        </span>
+        <button class="btn btn-link" class="btn btn link" (click)="cancelAllChanges()">
           Cancel all changes
         </button>
       </div>
