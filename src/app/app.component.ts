@@ -6,6 +6,7 @@ interface QuizDisplay {
   quizQuestions: QuestionDisplay[];
   markedForDelete: boolean;
   newlyAddedQuiz: boolean;
+  naiveQuizCheckSum: string;
 }
 
 interface QuestionDisplay {
@@ -28,6 +29,10 @@ export class AppComponent implements OnInit {
   loading = true;
   errorLoadingQuizzes = false;
 
+  generateNaiveQuizCheckSum = (quiz: QuizFromWeb) => {
+    return quiz.name + quiz.questions.map(x => '~' + x.name).join('');
+  }
+
   loadQuizzesFromCloud = async () => {
 
     try {
@@ -41,6 +46,7 @@ export class AppComponent implements OnInit {
         }))
         , markedForDelete: false
         , newlyAddedQuiz: false
+        , naiveQuizCheckSum: this.generateNaiveQuizCheckSum(x)
       }));      
 
       this.loading = false;
@@ -72,6 +78,7 @@ export class AppComponent implements OnInit {
       , quizQuestions: []
       , markedForDelete: false
       , newlyAddedQuiz: true
+      , naiveQuizCheckSum: ""
     };
 
     this.quizzes = [
@@ -174,5 +181,18 @@ export class AppComponent implements OnInit {
 
   get addedQuizCount() {
     return this.getAddedQuizCount().length;
+  }
+
+  getEditedQuizCount = () => {
+    return this.quizzes.filter(x => 
+      x.quizName + x.quizQuestions.map(y => '~' + y.questionName).join('') 
+      !== x.naiveQuizCheckSum
+      && !x.newlyAddedQuiz
+      && !x.markedForDelete
+      );
+  }
+
+  get editedQuizCount() {
+    return this.getEditedQuizCount().length;
   }
 }
