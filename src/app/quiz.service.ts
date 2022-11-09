@@ -1,12 +1,25 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { z } from 'zod';
 
-export interface QuizFromWeb {
-  name: string;
-  questions: {
-    name: string;
-  }[];
-}
+export const quizFromWebSchema = z.object({
+  name: z.string()
+  , foo: z.string()
+  , questions: z.array(z.object({
+    name: z.string()
+  }))
+});
+
+export const quizzesFromWebPromiseSchema = z.promise(
+    z.array(quizFromWebSchema)
+);
+
+// export interface QuizFromWeb {
+//   name: string;
+//   questions: {
+//     name: string;
+//   }[];
+// }
 
 export interface ShapeForSavingEditedQuizzes {
   quiz: string;
@@ -27,9 +40,9 @@ export class QuizService {
     private angularHttpClient: HttpClient
   ) { }
 
-  loadQuizzes = () => {
+  loadQuizzes = (): z.infer<typeof quizzesFromWebPromiseSchema> | undefined => {
 
-    const quizzesFromWeb = this.angularHttpClient.get<QuizFromWeb[]>(
+    const quizzesFromWeb = this.angularHttpClient.get<z.infer<typeof quizFromWebSchema>[]>(
       "https://modern-js.azurewebsites.net/api/HttpTriggerJS1?code=8XD3vN3ehHLdZacBQJQhgUnNst9202gdd5VM3kWCytDkz2nXhia6kA==&name=Mystery%20Quiz"
     ).toPromise();
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { QuizService, QuizFromWeb } from './quiz.service';
+import { QuizService, quizFromWebSchema, quizzesFromWebPromiseSchema } from './quiz.service';
+import { z } from 'zod';
 
 interface QuizDisplay {
   quizName: string;
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
   loading = true;
   errorLoadingQuizzes = false;
 
-  generateNaiveQuizChecksum = (quiz: QuizFromWeb) => {
+  generateNaiveQuizChecksum = (quiz: z.infer<typeof quizFromWebSchema>) => {
     return quiz.name + quiz.questions.map(x => '~' + x.name).join('');
   };
 
