@@ -33,29 +33,31 @@ export class AppComponent implements OnInit {
     return quiz.name + quiz.questions.map(x => '~' + x.name).join('');
   };
 
-  loadQuizzesFromCloud = async () => {
+  loadQuizzesFromCloud = () => {
 
-    try {
-      const quizzes = await this.quizSvc.loadQuizzes() ?? [];
-      console.log(quizzes);
+    this.quizSvc.loadQuizzes().subscribe(
+      (data: QuizFromWeb[]) => {
 
-      this.quizzes = quizzes.map(x => ({
-        quizName: x.name
-        , quizQuestions: x.questions.map(y => ({
-          questionName: y.name
-        }))
-        , markedForDelete: false
-        , newlyAddedQuiz: false
-        , naiveQuizChecksum: this.generateNaiveQuizChecksum(x)
-      }));      
+        this.quizzes = data.map(x => ({
+          quizName: x.name
+          , quizQuestions: x.questions.map(y => ({
+            questionName: y.name
+          }))
+          , markedForDelete: false
+          , newlyAddedQuiz: false
+          , naiveQuizChecksum: this.generateNaiveQuizChecksum(x)
+        }));      
+        
+        console.log(this.quizzes);
 
-      this.loading = false;
-    }
-    catch (err) {
-      console.error(err);
-      this.errorLoadingQuizzes = true;
-      this.loading = false;      
-    }
+        this.loading = false;
+      }
+      , err => {
+        console.error(err);
+        this.errorLoadingQuizzes = true;
+        this.loading = false;      
+      }
+    );
   };
 
   ngOnInit() {
