@@ -35,29 +35,29 @@ export class AppComponent implements OnInit {
 
   loadQuizzesFromCloud = () => {
 
-    this.quizSvc.loadQuizzes().subscribe(
-      (data: QuizFromWeb[]) => {
+    this.quizSvc.loadQuizzes().subscribe({
+        next: (data: QuizFromWeb[]) => {
 
-        this.quizzes = data.map(x => ({
-          quizName: x.name
-          , quizQuestions: x.questions.map(y => ({
-            questionName: y.name
-          }))
-          , markedForDelete: false
-          , newlyAddedQuiz: false
-          , naiveQuizChecksum: this.generateNaiveQuizChecksum(x)
-        }));      
-        
-        console.log(this.quizzes);
+          this.quizzes = data.map(x => ({
+            quizName: x.name
+            , quizQuestions: x.questions.map(y => ({
+              questionName: y.name
+            }))
+            , markedForDelete: false
+            , newlyAddedQuiz: false
+            , naiveQuizChecksum: this.generateNaiveQuizChecksum(x)
+          }));      
+          
+          console.log(this.quizzes);
 
-        this.loading = false;
-      }
-      , err => {
-        console.error(err);
-        this.errorLoadingQuizzes = true;
-        this.loading = false;      
-      }
-    );
+          this.loading = false;
+        }
+        , error: err => {
+          console.error(err);
+          this.errorLoadingQuizzes = true;
+          this.loading = false;      
+        }
+      });
   };
 
   ngOnInit() {
